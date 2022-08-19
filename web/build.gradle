@@ -1,0 +1,12 @@
+dependencies {
+    implementation project(":service")
+    implementation project(":model")
+    implementation project(":persistence")
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+    implementation 'org.postgresql:postgresql:42.3.6'
+    implementation 'org.modelmapper:modelmapper:2.3.8'
+}
