@@ -2,7 +2,6 @@ package esm.service.order;
 
 import esm.domain.Certificate;
 import esm.domain.Order;
-import esm.dto.request.CertificateRequestDto;
 import esm.dto.request.OrderRequestDto;
 import esm.dto.response.OrderResponseDto;
 import esm.repository.certificate.CertificateRepository;
