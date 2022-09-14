@@ -1,8 +1,8 @@
-package com.epam.esm.certificate;
+package com.epam.esm.service.certificate;
 
 import com.epam.esm.dto.request.CertificateRequestDto;
 import com.epam.esm.dto.response.CertificateResponseDto;
-import com.epam.esm.BaseService;
+import com.epam.esm.service.BaseService;
 import com.epam.esm.util.PageRequest;
 import org.springframework.stereotype.Service;
 

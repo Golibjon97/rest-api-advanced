@@ -3,7 +3,7 @@ package com.epam.esm.controller;
 import com.epam.esm.dto.BaseResponse;
 import com.epam.esm.dto.request.CertificateRequestDto;
 import com.epam.esm.dto.response.CertificateResponseDto;
-import com.epam.esm.certificate.CertificateService;
+import com.epam.esm.service.certificate.CertificateService;
 import com.epam.esm.util.PageRequest;
 import com.epam.esm.util.Sort;
 import org.modelmapper.ModelMapper;

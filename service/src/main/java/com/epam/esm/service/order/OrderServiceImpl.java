@@ -1,4 +1,4 @@
-package com.epam.esm.order;
+package com.epam.esm.service.order;
 
 import com.epam.esm.domain.Certificate;
 import com.epam.esm.domain.Order;

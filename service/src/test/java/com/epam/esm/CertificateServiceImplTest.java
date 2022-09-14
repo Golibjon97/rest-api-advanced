@@ -1,6 +1,6 @@
 package com.epam.esm;
 
-import com.epam.esm.certificate.CertificateServiceImpl;
+import com.epam.esm.service.certificate.CertificateServiceImpl;
 import com.epam.esm.domain.Certificate;
 import com.epam.esm.domain.Tag;
 import com.epam.esm.dto.request.CertificateRequestDto;

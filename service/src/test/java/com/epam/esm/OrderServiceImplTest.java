@@ -5,7 +5,7 @@ import com.epam.esm.domain.Order;
 import com.epam.esm.domain.User;
 import com.epam.esm.dto.request.OrderRequestDto;
 import com.epam.esm.dto.response.OrderResponseDto;
-import com.epam.esm.order.OrderServiceImpl;
+import com.epam.esm.service.order.OrderServiceImpl;
 import com.epam.esm.repository.order.OrderRepository;
 import com.epam.esm.util.PageRequest;
 import org.junit.jupiter.api.*;

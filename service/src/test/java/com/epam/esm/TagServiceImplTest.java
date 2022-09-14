@@ -6,7 +6,7 @@ import com.epam.esm.dto.request.TagRequestDto;
 import com.epam.esm.dto.response.TagResponseDto;
 import com.epam.esm.repository.order.OrderRepository;
 import com.epam.esm.repository.tag.TagRepository;
-import com.epam.esm.tag.TagServiceImpl;
+import com.epam.esm.service.tag.TagServiceImpl;
 import com.epam.esm.util.PageRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -7,7 +7,7 @@ import com.epam.esm.dto.response.OrderResponseDto;
 import com.epam.esm.dto.response.UserResponseDto;
 import com.epam.esm.repository.order.OrderRepository;
 import com.epam.esm.repository.user.UserRepository;
-import com.epam.esm.user.UserServiceImpl;
+import com.epam.esm.service.user.UserServiceImpl;
 import com.epam.esm.util.PageRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

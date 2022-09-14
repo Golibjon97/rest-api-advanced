@@ -1,4 +1,4 @@
-package com.epam.esm.tag;
+package com.epam.esm.service.tag;
 
 import com.epam.esm.domain.Order;
 import com.epam.esm.domain.Tag;

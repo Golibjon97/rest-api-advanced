@@ -4,7 +4,7 @@ import com.epam.esm.dto.BaseResponse;
 import com.epam.esm.dto.request.OrderRequestDto;
 import com.epam.esm.dto.response.OrderResponseDto;
 import com.epam.esm.exception.InvalidInputException;
-import com.epam.esm.order.OrderService;
+import com.epam.esm.service.order.OrderService;
 import com.epam.esm.util.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

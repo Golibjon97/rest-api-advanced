@@ -1,4 +1,4 @@
-package com.epam.esm.user;
+package com.epam.esm.service.user;
 
 import com.epam.esm.dto.response.OrderResponseDto;
 import com.epam.esm.dto.response.UserResponseDto;

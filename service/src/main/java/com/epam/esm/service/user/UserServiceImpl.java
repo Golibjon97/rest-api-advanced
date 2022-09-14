@@ -1,4 +1,4 @@
-package com.epam.esm.user;
+package com.epam.esm.service.user;
 
 import com.epam.esm.domain.Order;
 import com.epam.esm.domain.User;
