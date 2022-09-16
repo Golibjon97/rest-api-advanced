@@ -1,10 +1,12 @@
 package com.epam.esm.service.certificate;
 
+import com.epam.esm.ValidationResult;
 import com.epam.esm.domain.Certificate;
 import com.epam.esm.domain.Tag;
 import com.epam.esm.dto.request.CertificateRequestDto;
 import com.epam.esm.dto.response.CertificateResponseDto;
 import com.epam.esm.exception.DataNotFoundException;
+import com.epam.esm.exception.InvalidCertificateException;
 import com.epam.esm.exception.InvalidTagException;
 import com.epam.esm.repository.certificate.CertificateRepository;
 import com.epam.esm.repository.tag.TagRepository;
@@ -40,7 +42,10 @@ public class CertificateServiceImpl implements CertificateService {
     @Transactional
     @Override
     public CertificateResponseDto create(CertificateRequestDto certificateRequestDto) {
-        certificateValidator.checkNotNull(certificateRequestDto);
+        List<ValidationResult> validationResults = certificateValidator.checkNotNull(certificateRequestDto);
+        if(!validationResults.isEmpty()){
+            throw new InvalidCertificateException(validationResults.get(0).getMessage());
+        }
         if (certificateRequestDto.getTags() != null && !certificateRequestDto.getTags().isEmpty()) {
             List<Tag> tags = certificateRequestDto.getTags();
             certificateRequestDto.setTags(createTags(tags));
@@ -105,7 +110,11 @@ public class CertificateServiceImpl implements CertificateService {
     @Transactional
     @Override
     public CertificateResponseDto update(CertificateRequestDto requestDto, UUID id) {
-        certificateValidator.checkUpdate(requestDto);
+        ValidationResult validationResult = certificateValidator.checkUpdate(requestDto);
+        if(validationResult.getCode() != 0){
+            throw new InvalidCertificateException(validationResult.getMessage());
+        }
+
         if (requestDto.getTags() != null && !requestDto.getTags().isEmpty()) {
             List<Tag> tags = requestDto.getTags();
             requestDto.setTags(createTags(tags));
@@ -114,7 +123,10 @@ public class CertificateServiceImpl implements CertificateService {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(requestDto, oldCertificate);
 
-        certificateValidator.validate(modelMapper.map(oldCertificate, CertificateRequestDto.class));
+        List<ValidationResult> validationResults = certificateValidator.validate(modelMapper.map(oldCertificate, CertificateRequestDto.class));
+        if(!validationResults.isEmpty()){
+            throw new InvalidCertificateException(validationResults.get(0).getMessage());
+        }
 
         Certificate updated = certificateRepository.update(oldCertificate);
         return modelMapper.map(updated, CertificateResponseDto.class);

@@ -50,6 +50,7 @@ class CertificateServiceImplTest {
     private CertificateResponseDto responseDto;
     private List<CertificateResponseDto> certificateResponseList;
     private Tag tag;
+    private List<ValidationResult> validationResultEmpty;
     private PageRequest pageRequest;
 
 
@@ -63,11 +64,11 @@ class CertificateServiceImplTest {
         certificateResponseList = CertificateUtil.getCertificiateResponseList();
         pageRequest = CertificateUtil.getPageRequest();
         tag = TagUtil.getTag();
+        validationResultEmpty = CertificateUtil.getValidationResultEmpty();
     }
 
     @Test
     void canCreateNewCertificate() {
-        doNothing().when(validator).checkNotNull(requestDto);
         when(modelMapper.map(requestDto,Certificate.class)).thenReturn(certificate);
         when(modelMapper.map(certificate,CertificateResponseDto.class)).thenReturn(responseDto);
         when(certificateRepository.create(certificate)).thenReturn(certificate);
@@ -103,7 +104,7 @@ class CertificateServiceImplTest {
     void canGetAll() {
         when(certificateRepository.getAll(pageRequest)).thenReturn(certificateList);
         when(modelMapper.map(certificateList, new TypeToken<List<CertificateResponseDto>>(){
-                }.getType())).thenReturn(certificateResponseList);
+        }.getType())).thenReturn(certificateResponseList);
         List<CertificateResponseDto> result = certificateService.getAll(pageRequest);
         assertEquals(certificateResponseList, result);
     }
@@ -119,10 +120,9 @@ class CertificateServiceImplTest {
                 = certificateService.get("Test", tag.getName(),pageRequest);
         assertEquals(certificateResponseList, result);
     }
-
     @Test
     void canUpdate() {
-        doNothing().when(validator).checkUpdate(requestDto);
+        when(validator.checkUpdate(requestDto)).thenReturn(new ValidationResult(0));
         when(certificateRepository.getOne(certificate.getId())).thenReturn(certificate);
         when(modelMapper.getConfiguration()).thenReturn(new InheritingConfiguration());
         doNothing().when(modelMapper).map(requestDto, certificate);

@@ -1,6 +1,8 @@
 package com.epam.esm.validation.constraints;
 
+import com.epam.esm.ValidationResult;
+
 public interface Updatable<T> {
 
-    void checkUpdate(T t);
+    ValidationResult checkUpdate(T t);
 }

@@ -1,13 +1,14 @@
 package com.epam.esm.validation;
 
+import com.epam.esm.ValidationResult;
 import com.epam.esm.dto.request.CertificateRequestDto;
-import com.epam.esm.exception.InvalidCertificateException;
 import com.epam.esm.validation.constraints.NotNullable;
 import com.epam.esm.validation.constraints.Updatable;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.startsWith;
 
@@ -16,19 +17,20 @@ public class CertificateValidator extends BaseValidator<CertificateRequestDto>
         implements Updatable<CertificateRequestDto>, NotNullable<CertificateRequestDto> {
 
     @Override
-    public void checkNotNull(CertificateRequestDto requestDto) {
+    public List<ValidationResult> checkNotNull(CertificateRequestDto requestDto) {
+        List<ValidationResult> validationResultList = validate(requestDto);
+
         StringBuilder exceptionMessage = new StringBuilder();
         boolean isValid = true;
-        if (requestDto.getName() == null) {
+        if (requestDto.getName() == null || requestDto.getName() == "") {
             exceptionMessage.append("name");
             isValid = false;
         }
-        if (requestDto.getPrice() == null) {
+        if (requestDto.getPrice() == null || requestDto.getPrice() == "") {
             exceptionMessage.append("price");
             isValid = false;
         }
-
-        if (requestDto.getDuration() == null) {
+        if (requestDto.getDuration() == null || requestDto.getDuration() == "") {
             exceptionMessage.append("duration");
             isValid = false;
         }
@@ -36,65 +38,48 @@ public class CertificateValidator extends BaseValidator<CertificateRequestDto>
             int l = exceptionMessage.length();
             exceptionMessage.delete(l - 2, l);
             exceptionMessage.append(" cannot be null");
-            throw new InvalidCertificateException(exceptionMessage.toString());
+            validationResultList.add(new ValidationResult(5, exceptionMessage.toString()));
         }
 
-        validate(requestDto);
+        return validationResultList;
     }
 
     @Override
-    public void checkUpdate(CertificateRequestDto requestDto) {
+    public ValidationResult checkUpdate(CertificateRequestDto requestDto) {
         boolean isUpdated = requestDto.getName() != null ||
                 requestDto.getDescription() != null ||
                 requestDto.getPrice() != null ||
                 requestDto.getDuration() != null ||
                 requestDto.getTags() != null;
         if (!isUpdated) {
-            throw new InvalidCertificateException("nothing to update");
+            return new ValidationResult(6, "nothing to update");
         }
+        return new ValidationResult(0);
     }
 
     @Override
-    public void validate(CertificateRequestDto requestDto) {
-        StringBuilder exceptionMessage = new StringBuilder();
-        boolean isValid = true;
-        Boolean validatePrice = validatePrice(requestDto.getPrice());
-        Boolean validateDuration = validateDuration(requestDto.getDuration());
+    public List<ValidationResult> validate(CertificateRequestDto certificateRequestDto) {
+        List<ValidationResult> validationResultsList = new ArrayList<>();
 
-        if (!validatePrice) {
-            exceptionMessage.append("price should not be less than 0");
-            isValid = false;
-        }
-        if (!isValid) {
-            exceptionMessage.append(", ");
-        }
-
-        if (!validateDuration) {
-            exceptionMessage.append("duration should be greater than 0");
-            isValid = false;
-        }
-
-        if (!isValid) {
-            throw new InvalidCertificateException(exceptionMessage.toString());
-        }
-    }
-
-    private Boolean validateDuration(String duration) {
         try {
-            Integer.valueOf(duration);
+            Integer.valueOf(certificateRequestDto.getDuration());
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("duration should be only numeric");
+            validationResultsList.add(new ValidationResult(3, "duration should be only numeric"));
         }
-        return (!startsWith(duration, "-"));
+        if (startsWith(certificateRequestDto.getDuration(), "-")) {
+            validationResultsList.add(new ValidationResult(4, "duration should be greater than 0"));
+        }
+
+        try {
+            new BigDecimal(certificateRequestDto.getPrice());
+        } catch (NumberFormatException e) {
+            validationResultsList.add(new ValidationResult(1, "price should be only numeric"));
+        }
+        if (certificateRequestDto.getPrice().startsWith("-")) {
+            validationResultsList.add(new ValidationResult(2, "price should not be less than 0"));
+        }
+        return validationResultsList;
     }
 
-    private Boolean validatePrice(String price) {
-        try {
-            new BigDecimal(price);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("price should be only numeric");
-        }
-        return (!price.startsWith("-"));
-    }
 
 }

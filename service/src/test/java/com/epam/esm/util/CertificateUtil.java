@@ -2,6 +2,7 @@ package com.epam.esm.util;
 
 
 
+import com.epam.esm.ValidationResult;
 import com.epam.esm.domain.Certificate;
 import com.epam.esm.dto.request.CertificateRequestDto;
 import com.epam.esm.dto.response.CertificateResponseDto;
@@ -72,11 +73,11 @@ public class CertificateUtil {
     }
     public static CertificateRequestDto getCertificateRequestDtoNull() {
         return new CertificateRequestDto(
-                null,
-                null,
-                null,
-                null,
-                null
+                "",
+                "",
+                "",
+                "",
+                TagUtil.getTags()
         );
     }
 
@@ -121,38 +122,9 @@ public class CertificateUtil {
         return SortType.ASC;
     }
 
-    public static List<Certificate> getGiftCertificates() {
-        Certificate certificateEntity = new Certificate();
-        certificateEntity.setId(uuid("0001"));
-        certificateEntity.setName("Store");
-
-        Certificate certificateEntity1 = new Certificate();
-        certificateEntity1.setId(uuid("0002"));
-        certificateEntity1.setName("Kids Clothes");
-        certificateEntity1.setTags(TagUtil.getTags());
-
-        Certificate certificateEntity2 = new Certificate();
-        certificateEntity2.setId(uuid("0003"));
-        certificateEntity2.setName("Men Clothes");
-
-        return Arrays.asList(
-                certificateEntity, certificateEntity1, certificateEntity2);
-    }
-
-    public static List<CertificateResponseDto> getCertificateResponseDtos() {
-        CertificateResponseDto certificateGetResponse = new CertificateResponseDto();
-        certificateGetResponse.setId(uuid("0001"));
-        certificateGetResponse.setName("Store");
-
-        CertificateResponseDto certificateGetResponse1 = new CertificateResponseDto();
-        certificateGetResponse1.setId(uuid("0002"));
-        certificateGetResponse1.setName("Kids Clothes");
-        //certificateGetResponse1.setTags(TagUtil.getTags());
-
-        CertificateResponseDto certificateGetResponse2 = new CertificateResponseDto();
-        certificateGetResponse2.setId(uuid("0003"));
-        certificateGetResponse2.setName("Men Clothes");
-        return Arrays.asList(
-                certificateGetResponse, certificateGetResponse1, certificateGetResponse2);
+    public static List<ValidationResult> getValidationResultEmpty(){
+        List<ValidationResult> validationResults = new ArrayList<>();
+        validationResults.add(new ValidationResult());
+        return validationResults;
     }
 }
