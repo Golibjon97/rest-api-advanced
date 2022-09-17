@@ -22,15 +22,15 @@ public class CertificateValidator extends BaseValidator<CertificateRequestDto>
 
         StringBuilder exceptionMessage = new StringBuilder();
         boolean isValid = true;
-        if (requestDto.getName() == null || requestDto.getName() == "") {
+        if (requestDto.getName().isEmpty()) {
             exceptionMessage.append("name");
             isValid = false;
         }
-        if (requestDto.getPrice() == null || requestDto.getPrice() == "") {
+        if (requestDto.getPrice().isEmpty()) {
             exceptionMessage.append("price");
             isValid = false;
         }
-        if (requestDto.getDuration() == null || requestDto.getDuration() == "") {
+        if (requestDto.getDuration().isEmpty()) {
             exceptionMessage.append("duration");
             isValid = false;
         }
